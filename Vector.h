@@ -1,3 +1,7 @@
+// добавить метод нормализации элементов
+
+
+
 #pragma once
 #include <iostream>
 #include <stdexcept>
