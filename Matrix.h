@@ -62,19 +62,33 @@ public:
         for (size_t i = 0; i < this->_size; i++) {
             for (size_t j = i; j < this->_size; j++) {
                 T sum = 0;
-
                 for (size_t k = i; k <= j; k++) {
                     if ((k - i) < this->_array[i].GetSize() && (j - k) < mt._array[k].GetSize()) {
                         sum += this->_array[i][k - i] * mt._array[k][j - k];
                     }
                 }
-
                 result._array[i][j - i] = sum;
             }
         }
         return result;
     }
 
+    void Normalize() {
+        T totalSum = 0;
+        for (size_t i = 0; i < this->_size; i++) {
+            for (size_t j = 0; j < this->_array[i].GetSize(); j++) {
+                totalSum += this->_array[i][j];
+            }
+        }
+        if (totalSum == 0) {
+            throw std::logic_error("Cannot normalize a matrix with a zero sum.");
+        }
+        for (size_t i = 0; i < this->_size; i++) {
+            for (size_t j = 0; j < this->_array[i].GetSize(); j++) {
+                this->_array[i][j] = this->_array[i][j] / totalSum;
+            }
+        }
+    }
 
     friend istream& operator>>(istream& in, Matrix& mt) {
         for (size_t i = 0; i < mt._size; i++) {
